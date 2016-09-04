@@ -1,0 +1,11 @@
+plugins:
+  Etcd:
+    connections:
+      cluster1:
+        client: http://127.0.0.1:2379/v2/
+  Auth::Extensible:
+    realms:
+      config1:
+        provider: Etcd
+        db_connection_name: cluster1
+

@@ -1,0 +1,150 @@
+NAME
+    Dancer2::Plugin::Auth::Extensible::Provider::Etcd - authenticate via
+    Etd.
+
+DESCRIPTION
+    This class is an authentication provider designed to authenticate users
+    against etcd, using Dancer2::Plugin::Etcd to access a
+    database.
+
+    Crypt::SaltedHash is used to handle hashed passwords securely; you
+    wouldn't want to store plain text passwords now, would you? (If your
+    answer to that is yes, please reconsider; you really don't want to do
+    that, when it's so easy to do things right!)
+
+    See Dancer2::Plugin::Etcd for how to configure a database connection
+    appropriately; see the "CONFIGURATION" section below for how to
+    configure this authentication provider with database details.
+
+    See Dancer2::Plugin::Auth::Extensible for details on how to use the
+    authentication framework, including how to pick a more useful
+    authentication provider.
+
+CONFIGURATION
+    This provider tries to use sensible defaults, so you may not need to
+    provide much configuration if your database tables look similar to those
+    in the "SUGGESTED SCHEMA" section below.
+
+    The most basic configuration, assuming defaults for all options, and
+    defining a single authentication realm named 'users':
+
+        plugins:
+            Auth::Extensible:
+                realms:
+                    users:
+                        provider: 'Etcd'
+
+    You would still need to have provided suitable database connection
+    details to Dancer2::Plugin::Etcd, of course; see the docs for that
+    plugin for full details, but it could be as simple as, e.g.:
+
+    You would still need to provide valid etcd connection details via 
+     Dancer2::Plugin::Etcd. e.g.:
+
+        plugins:
+            Auth::Extensible:
+                realms:
+                    users:
+                        provider: 'Etcd'
+
+                        # Optionally disable roles support, if you only want to check
+                        # for successful logins but don't need to use role-based access:
+                        disable_roles: 1
+
+                        # optionally specify names of tables if they're not the defaults
+                        # (defaults are 'users', 'roles' and 'user_roles')
+                        users_path: 'users'
+                        roles_path: 'roles'
+                        user_roles_path: 'user_roles'
+
+                        # optionally set the column names (see the SUGGESTED SCHEMA
+                        # section below for the default names; if you use them, they'll
+                        # Just Work)
+                        users_id_key: 'id'
+                        users_username_key: 'username'
+                        users_password_key: 'password'
+                        roles_id_key: 'id'
+                        roles_role_key: 'role'
+                        user_roles_user_id_key: 'user_id'
+                        user_roles_role_id_key: 'roles_id'
+
+    See the main Dancer2::Plugin::Auth::Extensible documentation for how to
+    configure multiple authentication realms.
+
+ATTRIBUTES
+  dancer2_plugin_etcd
+    Lazy-loads the correct instance of Dancer2::Plugin::Etcd which
+    handles the following methods:
+
+    *   plugin_etcd
+
+        This corresponds to the "database" keyword from
+        Dancer2::Plugin::Etcd.
+
+  etcd
+    The connected "plugin_etcd" using "etcd_connection_name".
+
+  etcd_connection_name
+    Optional.
+
+  users_path
+    Defaults to 'users'.
+
+  users_id_key
+    Defaults to 'id'.
+
+  users_username_key
+    Defaults to 'username'.
+
+  users_password_key
+    Defaults to 'password'.
+
+  roles_path
+    Defaults to 'roles'.
+
+  roles_id_key
+    Defaults to 'id'.
+
+  roles_role_key
+    Defaults to 'role'.
+
+  user_roles_path
+    Defaults to 'user_roles'.
+
+  user_roles_user_id_key
+    Defaults to 'user_id'.
+
+  user_roles_role_id_key
+    Defaults to 'role_id'.
+
+METHODS
+  authenticate_user $username, $password
+  create_user
+  get_user_details $username
+  get_user_roles $username
+  set_user_details
+  set_user_password
+
+AUTHOR
+    Sam Batschelet (hexfusion), "<sbatschelet at mac.com>"
+
+BUGS / FEATURE REQUESTS
+    This is an early version; there may still be bugs present or features
+    missing.
+
+    This is developed on GitHub - please feel free to raise issues or pull
+    requests against the repo at:
+    <https://github.com/PerlDancer/Dancer2-Plugin-Auth-Extensible-Provider-Etcd>
+
+ACKNOWLEDGEMENTS
+    Strongly based on Dancer2::Plugin::Auth::Extensible::Provider::Database
+
+LICENSE AND COPYRIGHT
+    Copyright 2016 Sam Batschelet.
+
+    This program is free software; you can redistribute it and/or modify it
+    under the terms of either: the GNU General Public License as published
+    by the Free Software Foundation; or the Artistic License.
+
+    See http://dev.perl.org/licenses/ for more information.
+
