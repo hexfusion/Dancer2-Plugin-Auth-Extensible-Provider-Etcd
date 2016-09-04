@@ -129,15 +129,17 @@ AUTHOR
     Sam Batschelet (hexfusion), "<sbatschelet at mac.com>"
 
 BUGS / FEATURE REQUESTS
-    This is an early version; there may still be bugs present or features
-    missing.
+This is a development only module not yet intended for produciton or even use.
 
-    This is developed on GitHub - please feel free to raise issues or pull
-    requests against the repo at:
-    <https://github.com/PerlDancer/Dancer2-Plugin-Auth-Extensible-Provider-Etcd>
+This is developed on GitHub - please feel free to raise issues or pull requests
+against the repo at:
+<https://github.com/sbatschelet/Dancer2-Plugin-Auth-Extensible-Provider-Etcd>
+
 
 ACKNOWLEDGEMENTS
     Strongly based on Dancer2::Plugin::Auth::Extensible::Provider::Database
+
+    As in I copied the module and replaced Database with Etcd.
 
 LICENSE AND COPYRIGHT
     Copyright 2016 Sam Batschelet.
